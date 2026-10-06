@@ -41,9 +41,69 @@ false No cycle in the graph.
 - **Expected Time Complexity:** O(V + E)
 - **Expected Auxiliary Space Complexity:** O(V)
 
-### Accepted Solutions (1)
+### Accepted Solutions (2)
 
 #### Solution 1 (Java)
+
+- **Submitted:** 2026-10-06 13:44:01
+- **Status:** Correct
+- **Marks:** 0
+
+```java
+class Solution {
+    class Pair{
+        int node;
+        int parent;
+        Pair(int node, int parent){
+            this.node = node;
+            this.parent = parent;
+        }
+        
+    }
+    public boolean isCycle(int V, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0; i<V; i++){
+            adj.add(new ArrayList<>());
+        }
+        for(int[] edge : edges){
+            int u = edge[0];
+            int v = edge[1];
+            
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+        int [] vis = new int[V];
+        for(int i = 0; i<V; i++){
+            if(vis[i] == 0){
+                Queue<Pair> q = new LinkedList<>();
+                q.add(new Pair(i , -1));
+                vis[i] = 1;
+            
+        while(!q.isEmpty()){
+            Pair current = q.poll();
+            int node = current.node;
+            int parent = current.parent;
+            
+            for(int neighbour:adj.get(node)){
+                if(vis[neighbour] == 0){
+                    vis[neighbour] = 1;
+                    q.add(new Pair(neighbour , node));
+                }
+                else if(neighbour != parent){
+                    return true;
+                }
+            }
+        }
+        }
+        }
+        
+        return false;
+        
+    }
+}
+```
+
+#### Solution 2 (Java)
 
 - **Submitted:** 2026-10-06 12:31:01
 - **Status:** Correct
@@ -123,4 +183,4 @@ class Solution {
 }
 ```
 
-*Generated on: 06/10/2026, 12:37:12*
+*Generated on: 06/10/2026, 13:44:29*
